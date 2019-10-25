@@ -1,0 +1,8 @@
+{
+  "name": "bootcamp-gostack-desafio-01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RodrigoMonney/bootcamp-gostack-desafio-01.git",
+  "author": "Rodrigo Monney <rodrigo.monney@gmail.com>",
+  "license": "MIT"
+}
