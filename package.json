@@ -4,5 +4,12 @@
   "main": "index.js",
   "repository": "https://github.com/RodrigoMonney/bootcamp-gostack-desafio-01.git",
   "author": "Rodrigo Monney <rodrigo.monney@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.4"
+  },
+  "scripts": {
+    "dev": "yarn nodemon index.js"
+  }
 }
