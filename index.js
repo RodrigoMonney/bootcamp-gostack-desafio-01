@@ -15,4 +15,8 @@ server.get('/projects/:id', (req, res) => {
   res.status(404).json({ error: `Project with id '${projectId}' couldn't be found.` })
 })
 
+server.get('/projects', (req, res) => {
+  res.json({ projects })
+})
+
 server.listen(3000)
