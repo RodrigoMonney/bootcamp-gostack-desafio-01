@@ -50,4 +50,24 @@ server.post('/projects', (req, res) => {
   res.status(400).json({ error: 'Title and id are required.'})
 })
 
+// PUT: http://server/projects/:id
+server.put('/projects/:id', (req, res) => {
+  const { id } = req.params
+  const { title } = req.body
+  const projectIndex = projects.findIndex(p => p.id == id);
+  const project = projects[projectIndex]
+
+  if(!project) {
+    return res.status(404).json({ error: `Project with id '${id}' couldn't be found.` })
+  }
+
+  if(!title) {
+    return res.status(400).json({ error: 'Title is required.'})
+  }
+
+  projects[projectIndex].title = title
+
+  res.json({ project: projects[projectIndex] })
+})
+
 server.listen(3000)
