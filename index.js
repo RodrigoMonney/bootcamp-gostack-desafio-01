@@ -10,29 +10,13 @@ let projects = [{ id: 1,
                           'Study ReactJS, NodeJS and JavaScript', 
                           'Get great at Hackerrank challenges'] }]
 
-// GET: http://server/projects/1
-server.get('/projects/:id', (req, res) => {
-  const projectId = req.params.id;
-  const project = projects.filter(project => project.id == projectId)
-
-  if (project[0]) {
-    return res.json({ project })
-  }
-
-  res.status(404).json({ error: `Project with id '${projectId}' couldn't be found.` })
-})
-
-// GET: http://server/projects
-server.get('/projects', (req, res) => {
-  res.json({ projects })
-})
-
 // POST: http://server/projects
 server.post('/projects', (req, res) => {
   const { id, title } = req.body
   const project = {
     id,
-    title
+    title,
+    tasks: []
   }
 
   const isProjectCreated = projects.filter(p => p.id == project.id)[0]
@@ -48,6 +32,23 @@ server.post('/projects', (req, res) => {
   }
 
   res.status(400).json({ error: 'Title and id are required.'})
+})     
+
+// GET: http://server/projects
+server.get('/projects', (req, res) => {
+  res.json(projects)
+})
+
+// GET: http://server/projects/1
+server.get('/projects/:id', (req, res) => {
+  const projectId = req.params.id;
+  const project = projects.filter(project => project.id == projectId)
+
+  if (project[0]) {
+    return res.json({ project })
+  }
+
+  res.status(404).json({ error: `Project with id '${projectId}' couldn't be found.` })
 })
 
 // PUT: http://server/projects/:id
