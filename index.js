@@ -32,7 +32,23 @@ server.post('/projects', (req, res) => {
   }
 
   res.status(400).json({ error: 'Title and id are required.'})
-})     
+})
+
+// POST: http://server/projects/:id/tasks
+server.post('/projects/:id/tasks', (req, res) => {
+  const { id } = req.params
+  const { title } = req.body
+
+  if(!title) {
+    return res.status(400).json({ error: 'Title is required.'})
+  }
+
+  const projectIndex = projects.findIndex(p => p.id == id);
+
+  projects[projectIndex].tasks.push(title)
+
+  res.json(projects[projectIndex])
+})
 
 // GET: http://server/projects
 server.get('/projects', (req, res) => {
