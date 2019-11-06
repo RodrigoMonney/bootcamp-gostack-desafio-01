@@ -4,6 +4,18 @@ const server = express()
 
 server.use(express.json())
 
+// middlewares
+const checkProjectExists = (req, res, next) => {
+  const { id } = req.params
+  const project = projects.filter(p => p.id == id)[0]
+
+  if(!project) {
+    return res.status(400).json({ error: `Project with id '${id}' couldn't be found.` })
+  }
+
+  return next()
+}
+
 let projects = [{ id: 1, 
                   title: 'To work at EBANX', 
                   tasks: ['Finish the GoStack Bootcamp', 
@@ -35,7 +47,7 @@ server.post('/projects', (req, res) => {
 })
 
 // POST: http://server/projects/:id/tasks
-server.post('/projects/:id/tasks', (req, res) => {
+server.post('/projects/:id/tasks', checkProjectExists, (req, res) => {
   const { id } = req.params
   const { title } = req.body
 
@@ -56,15 +68,11 @@ server.get('/projects', (req, res) => {
 })
 
 // GET: http://server/projects/1
-server.get('/projects/:id', (req, res) => {
-  const projectId = req.params.id;
-  const project = projects.filter(project => project.id == projectId)
+server.get('/projects/:id', checkProjectExists, (req, res) => {
+  const { id } = req.params;
+  const project = projects.filter(project => project.id == id)[0]
 
-  if (project[0]) {
-    return res.json({ project })
-  }
-
-  res.status(404).json({ error: `Project with id '${projectId}' couldn't be found.` })
+  return res.json(project)
 })
 
 // PUT: http://server/projects/:id
