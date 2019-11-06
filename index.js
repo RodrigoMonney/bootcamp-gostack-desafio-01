@@ -26,6 +26,8 @@ const checkProjectExists = (req, res, next) => {
  */
 const countRequests = (req, res, next) => {
   console.count('request #')
+
+  return next()
 }
 
 server.use(countRequests)
@@ -57,7 +59,7 @@ server.post('/projects', (req, res) => {
     return res.json({ project })
   }
 
-  res.status(400).json({ error: 'Title and id are required.'})
+  return res.status(400).json({ error: 'Title and id are required.'})
 })
 
 // POST: http://server/projects/:id/tasks
@@ -73,12 +75,12 @@ server.post('/projects/:id/tasks', checkProjectExists, (req, res) => {
 
   projects[projectIndex].tasks.push(title)
 
-  res.json(projects[projectIndex])
+  return res.json(projects[projectIndex])
 })
 
 // GET: http://server/projects
 server.get('/projects', (req, res) => {
-  res.json(projects)
+  return res.json(projects)
 })
 
 // GET: http://server/projects/1
@@ -98,7 +100,7 @@ server.put('/projects/:id', checkProjectExists, (req, res) => {
 
   projects[projectIndex].title = title
 
-  res.json(projects[projectIndex])
+  return res.json(projects[projectIndex])
 })
 
 // DELETE: http://server/projects/:id
