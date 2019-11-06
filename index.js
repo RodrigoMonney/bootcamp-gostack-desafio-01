@@ -5,6 +5,9 @@ const server = express()
 server.use(express.json())
 
 // middlewares
+/**
+ * check if a project with an id exists
+ *  */
 const checkProjectExists = (req, res, next) => {
   const { id } = req.params
   const project = projects.filter(p => p.id == id)[0]
@@ -18,7 +21,16 @@ const checkProjectExists = (req, res, next) => {
   return next()
 }
 
-let projects = [{ id: 1, 
+/**
+ * count requests to the server
+ */
+const countRequests = (req, res, next) => {
+  console.count('request #')
+}
+
+server.use(countRequests)
+
+const projects = [{ id: 1, 
                   title: 'To work at EBANX', 
                   tasks: ['Finish the GoStack Bootcamp', 
                           'Study ReactJS, NodeJS and JavaScript', 
